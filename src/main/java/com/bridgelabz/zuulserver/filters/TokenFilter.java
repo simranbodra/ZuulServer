@@ -33,8 +33,12 @@ public class TokenFilter extends ZuulFilter {
 
 		RequestContext ctx = RequestContext.getCurrentContext();
 		HttpServletRequest request = ctx.getRequest();
-
-		if (!request.getRequestURI().startsWith("/user/")) {
+		
+		if (request.getRequestURI().startsWith("/notes/") || request.getRequestURI().startsWith("/labels/")
+				|| request.getRequestURI().startsWith("/user/addProfilePicture/")
+				|| request.getRequestURI().startsWith("/user/removeProfilePicture/")
+				|| request.getRequestURI().startsWith("/user/getProfileDetails")) {
+						
 			String token = request.getHeader("Authorization");
 
 			String userId = tokenProvider.parseJWT(token);
